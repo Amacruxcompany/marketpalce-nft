@@ -1,0 +1,26 @@
+[{
+    "title": "Background",
+    "description": "New Pine wood",
+    "percent": 12
+},{
+    "title": "Clothes",
+    "description": "No cactus shirt",
+    "percent": 60
+},{
+    "title": "Eyes",
+    "description": "A single black eye",
+    "percent": 0
+},{
+    "title": "Fur",
+    "description": "Prickly green",
+    "percent": 10
+},{
+    "title": "Hat",
+    "description": "No hat",
+    "percent": 90
+},{
+    "title": "Mouth",
+    "description": "Big sharp mouth",
+    "percent": 0
+}
+]

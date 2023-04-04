@@ -1,0 +1,110 @@
+[
+    {
+        "tokenId": 1,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-01.png",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 2,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-02.png",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 3,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-03.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 4,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-04.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 5,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-05.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 6,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-01.png",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 7,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-02.png",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 8,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-03.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 9,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-04.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 10,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-05.jpg",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 11,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-01.png",
+            "name": "Avengers"
+        }
+    },
+    {
+        "tokenId": 12,
+        "price": 2,
+        "token":"BNB",
+        "meta": {
+            "image": "/assets/img/nft-images/nft-02.png",
+            "name": "Avengers"
+        }
+    }
+]
