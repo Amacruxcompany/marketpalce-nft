@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.transition-scroll {
+  transition: .3s;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-blue
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-transparent rounded-lg transition-scroll
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-light
+}
+
+@media (max-width: 800px) {
+  ::-webkit-scrollbar {
+    height: 10px;
+  }
+}
+
+
+@layer utilities {
+  .indicator {
+    cursor: pointer;
+    margin-right: 12px;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    background: #b2b2b2;
+  }
+  .indicator.active {
+    background: #89f4d1;
+  }
+
+  .bg-transparent-custom {
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.15),
+      rgba(255, 255, 255, 0.1)
+    );
+    backdrop-filter: blur(40px);
+  }
+
+  .shadow-custom {
+    box-shadow: 5px -1px 25px rgb(168 85 247);
+  }
+
+  .shadow-light {
+    @apply shadow-[0_4px_24px_-1px_rgba(0,0,0,0.2)]
+  }
+
+  .bg-gradient-transparent{
+    @apply bg-gradient-to-br from-[rgba(255,255,255,0.15)] to-[rgba(255,255,255,0.10)] shadow-light dark:shadow-lg
+  }
+
+  .radio-input{
+    opacity: 0;
+    transition: .3s;
+  }
+  
+  input[type=radio]:checked + .radio-input{
+    transition: .3s;
+    opacity: 1;
+  }
+
+  input:focus, textarea:focus {
+    box-shadow: none !important;
+  }
+
+  .withoutArrow{
+    -moz-appearance: none;
+  -webkit-appearance: none;
+  }
+}
