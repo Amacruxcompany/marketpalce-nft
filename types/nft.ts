@@ -30,7 +30,7 @@ export type FileReq = {
   fileName: string
 }
 
-export type PinataRes = {
+export type IpfsRes = {
   IpfsHash: string
   PinSize: number
   Timestamp: string

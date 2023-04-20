@@ -33,8 +33,8 @@ export default withSession(async (
         filename: fileName + "-" + uuidv4()
       }
     );
-
-    const fileRes = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
+    //PINATA
+      const fileRes = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
       maxBodyLength: Infinity,
       headers: {
         "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
@@ -42,6 +42,15 @@ export default withSession(async (
         pinata_secret_api_key: pinataSecretApiKey
       }
     });
+
+    //NFTSTORAGE
+    // const fileRes = await axios.post("https://api.nft.storage/upload", formData, {
+    //   maxBodyLength: Infinity,
+    //   headers: {
+    //     "Content-Type": `multipart/form-data; boundary=${formData.getBoundary()}`,
+    //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA4ZjdjMjBlQjI4MTE1RjM3MzM3ODkyMjA2M0RlN0JCODgyQ0I0MDAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY4MTQ4NjgxMTgyNywibmFtZSI6InRlc3QtYW1heCJ9.YuHNAOO_3Dmj16fIIJFUb8KYpvjrwsPoaSobkOhP1nw'
+    //   }
+    // });
 
     return res.status(200).send(fileRes.data);
   } else {

@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from 'react';
 import { BaseLayout } from '@ui'
 import { Switch } from '@headlessui/react'
 import Link from 'next/link'
-import { NftMeta, PinataRes } from '@_types/nft';
+import { NftMeta, IpfsRes } from '@_types/nft';
 import axios from 'axios';
 import { useWeb3 } from '@providers/web3';
 import { ethers } from 'ethers';
@@ -73,11 +73,12 @@ const NftCreate: NextPage = () => {
         }
       )
 
-      const data = res.data as PinataRes;
+      const data = res.data as IpfsRes;
 
       setNftMeta({
         ...nftMeta,
-        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`
+        image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`
+        
       });
     } catch(e: any) {
       console.error(e.message);
@@ -118,10 +119,11 @@ const NftCreate: NextPage = () => {
         }
       )
 
-      const data = res.data as PinataRes;
-      setNftURI(`${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`);
+      const data = res.data as IpfsRes;
+      setNftURI(`${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`);
+
     } catch (e: any) {
-      console.error(e.message);
+      console.error("error en subir metadata", e.message);
     }
   }
 
@@ -151,7 +153,7 @@ const NftCreate: NextPage = () => {
         }
       );
     } catch(e: any) {
-      console.error(e.message);
+      console.error("error create nft", e.message);
     }
   }
 
@@ -183,7 +185,7 @@ const NftCreate: NextPage = () => {
   return (
     <BaseLayout>
       <div>
-        <div className="py-4">
+        {/* <div className="py-4">
           { !nftURI &&
             <div className="flex">
               <div className="mr-2 font-bold underline">Do you have meta data already?</div>
@@ -202,7 +204,7 @@ const NftCreate: NextPage = () => {
               </Switch>
             </div>
           }
-        </div>
+        </div> */}
         { (nftURI || hasURI) ?
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
