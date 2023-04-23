@@ -7,7 +7,8 @@ const nextConfig = {
   },
   // Agregar la opción de body-parser para todas las rutas
   api: {
-    bodyParser: false,
+    bodyParser: { sizeLimit: '50mb' },
+    responseLimit: '50mb',
   },
   webpack: config => {
     // Agregar la configuración de WebSocket

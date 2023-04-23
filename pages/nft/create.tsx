@@ -65,6 +65,9 @@ const NftCreate: NextPage = () => {
         bytes,
         contentType: file.type,
         fileName: file.name.replace(/\.[^/.]+$/, "")
+      }, {
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
       });
 
       const res = await toast.promise(
