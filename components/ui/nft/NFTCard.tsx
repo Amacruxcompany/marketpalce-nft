@@ -61,7 +61,7 @@ const NFTCard: React.FC<Props> = ({ image, name, tokenId, price, token }) => {
             {price} {token}
           </strong>
         </div>
-        <footer className='bg-blue dark:bg-blue-light rounded-md text-blue-light dark:text-blue mt-6 flex justify-between'>
+        <footer style={{backgroundColor: "transparent"}} className='bg-blue dark:bg-blue-light rounded-md text-blue-light dark:text-blue mt-6 flex justify-between'>
           {/* <button className='text-xs font-bold px-3 w-full text-left uppercase'>
             Available
           </button> */}
@@ -77,7 +77,7 @@ const NFTCard: React.FC<Props> = ({ image, name, tokenId, price, token }) => {
                 }
               }}
               type="button"
-              className="disabled:text-gray-400 disabled:cursor-not-allowed flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="bg-blue dark:bg-blue-light disabled:text-gray-400 disabled:cursor-not-allowed flex-1 ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               {activeNft.isListed ? "Nft is listed": "List Nft"}
             </button>

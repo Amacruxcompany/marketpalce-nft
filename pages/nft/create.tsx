@@ -12,6 +12,7 @@ import { ethers } from 'ethers';
 import { toast } from "react-toastify";
 import { useNetwork } from '@hooks/web3';
 import { ExclamationIcon } from '@heroicons/react/solid';
+import { useRouter } from 'next/router';
 
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
@@ -21,6 +22,7 @@ const NftCreate: NextPage = () => {
   const [nftURI, setNftURI] = useState("");
   const [price, setPrice] = useState("");
   const [hasURI, setHasURI] = useState(false);
+  const router = useRouter();
   const [nftMeta, setNftMeta] = useState<NftMeta>({
     name: "",
     description: "",
@@ -81,7 +83,7 @@ const NftCreate: NextPage = () => {
         
       });
     } catch(e: any) {
-      console.error(e.message);
+      console.error("aqui?", e.message);
     }
   }
 
@@ -129,6 +131,7 @@ const NftCreate: NextPage = () => {
 
   const createNft = async () => {
     try {
+      const loadingToast = toast.loading("Creating NFT...");
       const nftRes = await axios.get(nftURI);
       const content = nftRes.data;
 
@@ -141,17 +144,25 @@ const NftCreate: NextPage = () => {
       const tx = await contract?.mintToken(
         nftURI,
         ethers.utils.parseEther(price), {
-          value: ethers.utils.parseEther(0.025.toString())
+          value: ethers.utils.parseEther(0.000001.toString())
         }
       );
-      
+      await toast.dismiss();
       await toast.promise(
         tx!.wait(), {
           pending: "Minting Nft Token",
           success: "Nft has ben created",
           error: "Minting error"
         }
-      );
+      ).then((result) => {
+        // if (result.status === 'success') {
+        //   // Redirigir a la página principal
+        //   router.push('/');
+        // }
+        console.log(result)
+          router.push('/profile');
+
+      });
     } catch(e: any) {
       console.error("error create nft", e.message);
     }

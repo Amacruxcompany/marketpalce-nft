@@ -67,7 +67,7 @@ const NFTUpload: React.FC<Props> = ({ nftMeta, setNftMeta, callback }) => {
         image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`,
       });
     } catch (e: any) {
-      console.error(e.message);
+      console.error("aqui va", e.message);
     }
   };
 

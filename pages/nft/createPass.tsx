@@ -150,7 +150,7 @@ const NftCreate: NextPage = () => {
         nftURI,
         ethers.utils.parseEther(price),
         {
-          value: ethers.utils.parseEther((0.025).toString()),
+          value: ethers.utils.parseEther((0.000001).toString()),
         }
       );
 
