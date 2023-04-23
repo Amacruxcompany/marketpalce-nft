@@ -394,7 +394,7 @@ const NftCreate: NextPage = () => {
                         </div>
                         <p className="text-xs text-gray-500"
                         style={{color:'black'}}
-                        >PNG, JPG, GIF up to 10MB</p>
+                        >PNG, JPG, GIF up to 1MB</p>
                       </div>
                     </div>
                   </div>
