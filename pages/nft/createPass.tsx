@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from 'react';
 import { BaseLayout } from '@ui';
 import { Switch } from '@headlessui/react';
 import Link from 'next/link';
-import { NftMeta, PinataRes } from '@_types/nft';
+import { NftMeta, IpfsRes } from '@_types/nft';
 import axios from 'axios';
 import { useWeb3 } from '@providers/web3';
 import { ethers } from 'ethers';
@@ -78,11 +78,12 @@ const NftCreate: NextPage = () => {
         error: 'Image upload error',
       });
 
-      const data = res.data as PinataRes;
+      const data = res.data as IpfsRes;
 
       setNftMeta({
         ...nftMeta,
-        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`,
+        image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`,
+
       });
     } catch (e: any) {
       console.log(e);
@@ -127,7 +128,7 @@ const NftCreate: NextPage = () => {
         error: 'Metadata upload error',
       });
 
-      const data = res.data as PinataRes;
+      const data = res.data as IpfsRes;
       setNftURI(`https://gateway.moralisipfs.com/ipfs/${data.IpfsHash}`);
     } catch (e: any) {
       console.error(e.message);
@@ -149,7 +150,7 @@ const NftCreate: NextPage = () => {
         nftURI,
         ethers.utils.parseEther(price),
         {
-          value: ethers.utils.parseEther((0.025).toString()),
+          value: ethers.utils.parseEther((0.000001).toString()),
         }
       );
 

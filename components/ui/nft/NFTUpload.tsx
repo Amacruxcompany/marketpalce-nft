@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { ChangeEvent, useState } from 'react';
 import axios from 'axios';
 import { useWeb3 } from '@providers/web3';
-import { NftMeta, PinataRes } from '@_types/nft';
+import { NftMeta, IpfsRes } from '@_types/nft';
 import Image from 'next/image';
 import { Switch } from '@headlessui/react';
 
@@ -60,14 +60,14 @@ const NFTUpload: React.FC<Props> = ({ nftMeta, setNftMeta, callback }) => {
         error: 'Image upload error',
       });
 
-      const data = res.data as PinataRes;
+      const data = res.data as IpfsRes;
 
       setNftMeta({
         ...nftMeta,
-        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`,
+        image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`,
       });
     } catch (e: any) {
-      console.error(e.message);
+      console.error("aqui va", e.message);
     }
   };
 

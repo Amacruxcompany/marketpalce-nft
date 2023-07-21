@@ -32,7 +32,6 @@ export default function Navbar() {
   const { account } = useAccount();
   const { network } = useNetwork();
 
-  console.log('account2', useAccount)
 
   const [isOpen, setIsOpen] = useState(false);
 

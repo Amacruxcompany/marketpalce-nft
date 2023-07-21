@@ -5,39 +5,38 @@ import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
-import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 
 contract NftMarket is ERC721URIStorage, Ownable {
   using Counters for Counters.Counter;
 
   struct NftItem {
-    uint256 tokenId;
-    uint256 price;
+    uint tokenId;
+    uint price;
     address creator;
     bool isListed;
   }
 
-  uint256 public listingPrice = 0.025 ether;
+  uint public listingPrice = 0.000001 ether;
 
   Counters.Counter private _listedItems;
   Counters.Counter private _tokenIds;
 
   mapping(string => bool) private _usedTokenURIs;
-  mapping(uint256 => NftItem) private _idToNftItem;
+  mapping(uint => NftItem) private _idToNftItem;
 
-  mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
-  mapping(uint256 => uint256) private _idToOwnedIndex;
+  mapping(address => mapping(uint => uint)) private _ownedTokens;
+  mapping(uint => uint) private _idToOwnedIndex;
 
   uint256[] private _allNfts;
-  mapping(uint256 => uint256) private _idToNftIndex;
+  mapping(uint => uint) private _idToNftIndex;
 
   event NftItemCreated(
-    uint256 tokenId,
-    uint256 price,
+    uint tokenId,
+    uint price,
     address creator,
     bool isListed
   );
+
   event ConsecutiveTransfer(
     uint256 indexed fromTokenId,
     uint256 toTokenId,
@@ -45,70 +44,49 @@ contract NftMarket is ERC721URIStorage, Ownable {
     address indexed toAddress
   );
 
-
   constructor() ERC721('AmacruxNFT', 'ANFT') {}
 
-/*@dev
-  setListingPrice : This function allows the owner of the NFT marketplace contract to set a new listing price for NFTs. The new price must be greater than 0. The onlyOwner modifier ensures that only the owner of the contract can call this function.
- */
-  function setListingPrice(uint256 newPrice) external onlyOwner {
+  function setListingPrice(uint newPrice) external onlyOwner {
     require(newPrice > 0, 'Price must be at least 1 wei');
     listingPrice = newPrice;
   }
 
-/*@dev 
-_init : This is an internal function that initializes a new NFT with the specified number of tokens and transfers it to the specified address. It emits a ConsecutiveTransfer event to indicate that the NFT has been transferred
- */
-  function _init(address to, uint256 number_of_tokens) internal virtual {
-    emit ConsecutiveTransfer(0, number_of_tokens, address(0), to);
-  }
-
-
-/*@dev
-getNftItem: This function returns information about an NFT with the specified token ID, such as its owner, whether it's listed for sale, and its current price.
- */
-  function getNftItem(uint256 tokenId) public view returns (NftItem memory) {
+  function getNftItem(uint tokenId) public view returns (NftItem memory) {
     return _idToNftItem[tokenId];
   }
 
-  
-  function listedItemsCount() public view returns (uint256) {
+  function listedItemsCount() public view returns (uint) {
     return _listedItems.current();
   }
-
 
   function tokenURIExists(string memory tokenURI) public view returns (bool) {
     return _usedTokenURIs[tokenURI] == true;
   }
 
-  //
-  function totalSupply() public view returns (uint256) {
+  function totalSupply() public view returns (uint) {
     return _allNfts.length;
   }
 
-
-  function tokenByIndex(uint256 index) public view returns (uint256) {
+  function tokenByIndex(uint index) public view returns (uint) {
     require(index < totalSupply(), 'Index out of bounds');
     return _allNfts[index];
   }
 
-
   function tokenOfOwnerByIndex(
     address owner,
-    uint256 index
-  ) public view returns (uint256) {
+    uint index
+  ) public view returns (uint) {
     require(index < ERC721.balanceOf(owner), 'Index out of bounds');
     return _ownedTokens[owner][index];
   }
 
-
   function getAllNftsOnSale() public view returns (NftItem[] memory) {
-    uint256 allItemsCounts = totalSupply();
-    uint256 currentIndex = 0;
+    uint allItemsCounts = totalSupply();
+    uint currentIndex = 0;
     NftItem[] memory items = new NftItem[](_listedItems.current());
 
-    for (uint256 i = 0; i < allItemsCounts; i++) {
-      uint256 tokenId = tokenByIndex(i);
+    for (uint i = 0; i < allItemsCounts; i++) {
+      uint tokenId = tokenByIndex(i);
       NftItem storage item = _idToNftItem[tokenId];
 
       if (item.isListed == true) {
@@ -120,13 +98,12 @@ getNftItem: This function returns information about an NFT with the specified to
     return items;
   }
 
-
   function getOwnedNfts() public view returns (NftItem[] memory) {
-    uint256 ownedItemsCount = ERC721.balanceOf(msg.sender);
+    uint ownedItemsCount = ERC721.balanceOf(msg.sender);
     NftItem[] memory items = new NftItem[](ownedItemsCount);
 
-    for (uint256 i = 0; i < ownedItemsCount; i++) {
-      uint256 tokenId = tokenOfOwnerByIndex(msg.sender, i);
+    for (uint i = 0; i < ownedItemsCount; i++) {
+      uint tokenId = tokenOfOwnerByIndex(msg.sender, i);
       NftItem storage item = _idToNftItem[tokenId];
       items[i] = item;
     }
@@ -134,18 +111,17 @@ getNftItem: This function returns information about an NFT with the specified to
     return items;
   }
 
-
   function mintToken(
     string memory tokenURI,
-    uint256 price
-  ) public payable returns (uint256) {
+    uint price
+  ) public payable returns (uint) {
     require(!tokenURIExists(tokenURI), 'Token URI already exists');
     require(msg.value == listingPrice, 'Price must be equal to listing price');
 
     _tokenIds.increment();
     _listedItems.increment();
 
-    uint256 newTokenId = _tokenIds.current();
+    uint newTokenId = _tokenIds.current();
 
     _safeMint(msg.sender, newTokenId);
     _setTokenURI(newTokenId, tokenURI);
@@ -155,14 +131,8 @@ getNftItem: This function returns information about an NFT with the specified to
     return newTokenId;
   }
 
-  function burn(uint256 tokenId) public {
-    require(_exists(tokenId), 'Token does not exist');
-    _burn(tokenId);
-  }
-
-  
-  function buyNft(uint256 tokenId) public payable {
-    uint256 price = _idToNftItem[tokenId].price;
+  function buyNft(uint tokenId) public payable {
+    uint price = _idToNftItem[tokenId].price;
     address owner = ERC721.ownerOf(tokenId);
 
     require(msg.sender != owner, 'You already own this NFT');
@@ -175,8 +145,7 @@ getNftItem: This function returns information about an NFT with the specified to
     payable(owner).transfer(msg.value);
   }
 
-  
-  function placeNftOnSale(uint256 tokenId, uint256 newPrice) public payable {
+  function placeNftOnSale(uint tokenId, uint newPrice) public payable {
     require(
       ERC721.ownerOf(tokenId) == msg.sender,
       'You are not owner of this nft'
@@ -189,8 +158,7 @@ getNftItem: This function returns information about an NFT with the specified to
     _listedItems.increment();
   }
 
-  
-  function _createNftItem(uint256 tokenId, uint256 price) private {
+  function _createNftItem(uint tokenId, uint price) private {
     require(price > 0, 'Price must be at least 1 wei');
 
     _idToNftItem[tokenId] = NftItem(tokenId, price, msg.sender, true);

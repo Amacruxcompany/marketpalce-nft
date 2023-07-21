@@ -7,12 +7,12 @@ import MyCollection from './MyCollection';
 import NftsCreatedContainer from './NftsCreatedContainer';
 
 const tabs = [
-  {
-    name: 'My Collection',
-    href: '/profile',
-    current: true,
-    Icon: DashboardIcon,
-  },
+  // {
+  //   name: 'My Collection',
+  //   href: '/profile',
+  //   current: true,
+  //   Icon: DashboardIcon,
+  // },
   {
     name: 'Created',
     href: '/profile#created',
@@ -26,8 +26,9 @@ function CollectionsProfile() {
   return (
     <>
       <CategoriesProfileMenu tabs={tabs} />
-      {router.asPath === tabs[0].href && <MyCollection />}
-      {router.asPath === tabs[1].href && <NftsCreatedContainer />}
+      {/* {router.asPath === tabs[0].href && <MyCollection />} */}
+      {router.asPath === tabs[0].href && <NftsCreatedContainer />}
+      <NftsCreatedContainer />
     </>
   );
 }

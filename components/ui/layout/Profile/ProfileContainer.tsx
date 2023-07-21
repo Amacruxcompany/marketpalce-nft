@@ -22,10 +22,10 @@ const profileTabs = [
     name: 'Items',
     href: '/profile',
   },
-  {
-    name: 'Listings',
-    href: '/profile#listing',
-  },
+  // {
+  //   name: 'Listings',
+  //   href: '/profile#listing',
+  // },
 ];
 
 const ProfileTabs = ({ href, name }: TabProp) => {

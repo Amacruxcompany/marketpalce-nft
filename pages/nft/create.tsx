@@ -5,13 +5,14 @@ import { ChangeEvent, useState } from 'react';
 import { BaseLayout } from '@ui'
 import { Switch } from '@headlessui/react'
 import Link from 'next/link'
-import { NftMeta, PinataRes } from '@_types/nft';
+import { NftMeta, IpfsRes } from '@_types/nft';
 import axios from 'axios';
 import { useWeb3 } from '@providers/web3';
 import { ethers } from 'ethers';
 import { toast } from "react-toastify";
 import { useNetwork } from '@hooks/web3';
 import { ExclamationIcon } from '@heroicons/react/solid';
+import { useRouter } from 'next/router';
 
 const ALLOWED_FIELDS = ["name", "description", "image", "attributes"];
 
@@ -21,6 +22,7 @@ const NftCreate: NextPage = () => {
   const [nftURI, setNftURI] = useState("");
   const [price, setPrice] = useState("");
   const [hasURI, setHasURI] = useState(false);
+  const router = useRouter();
   const [nftMeta, setNftMeta] = useState<NftMeta>({
     name: "",
     description: "",
@@ -63,6 +65,9 @@ const NftCreate: NextPage = () => {
         bytes,
         contentType: file.type,
         fileName: file.name.replace(/\.[^/.]+$/, "")
+      }, {
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity,
       });
 
       const res = await toast.promise(
@@ -73,14 +78,15 @@ const NftCreate: NextPage = () => {
         }
       )
 
-      const data = res.data as PinataRes;
+      const data = res.data as IpfsRes;
 
       setNftMeta({
         ...nftMeta,
-        image: `${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`
+        image: `${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`
+        
       });
     } catch(e: any) {
-      console.error(e.message);
+      console.error("aqui?", e.message);
     }
   }
 
@@ -118,15 +124,17 @@ const NftCreate: NextPage = () => {
         }
       )
 
-      const data = res.data as PinataRes;
-      setNftURI(`${process.env.NEXT_PUBLIC_PINATA_DOMAIN}/ipfs/${data.IpfsHash}`);
+      const data = res.data as IpfsRes;
+      setNftURI(`${process.env.NEXT_PUBLIC_IPFS_DOMAIN}/ipfs/${data.IpfsHash}`);
+
     } catch (e: any) {
-      console.error(e.message);
+      console.error("error en subir metadata", e.message);
     }
   }
 
   const createNft = async () => {
     try {
+      const loadingToast = toast.loading("Creating NFT...");
       const nftRes = await axios.get(nftURI);
       const content = nftRes.data;
 
@@ -139,19 +147,27 @@ const NftCreate: NextPage = () => {
       const tx = await contract?.mintToken(
         nftURI,
         ethers.utils.parseEther(price), {
-          value: ethers.utils.parseEther(0.025.toString())
+          value: ethers.utils.parseEther(0.000001.toString())
         }
       );
-      
+      await toast.dismiss();
       await toast.promise(
         tx!.wait(), {
           pending: "Minting Nft Token",
           success: "Nft has ben created",
           error: "Minting error"
         }
-      );
+      ).then((result) => {
+        // if (result.status === 'success') {
+        //   // Redirigir a la página principal
+        //   router.push('/');
+        // }
+        console.log(result)
+          router.push('/profile');
+
+      });
     } catch(e: any) {
-      console.error(e.message);
+      console.error("error create nft", e.message);
     }
   }
 
@@ -183,7 +199,7 @@ const NftCreate: NextPage = () => {
   return (
     <BaseLayout>
       <div>
-        <div className="py-4">
+        {/* <div className="py-4">
           { !nftURI &&
             <div className="flex">
               <div className="mr-2 font-bold underline">Do you have meta data already?</div>
@@ -202,7 +218,7 @@ const NftCreate: NextPage = () => {
               </Switch>
             </div>
           }
-        </div>
+        </div> */}
         { (nftURI || hasURI) ?
           <div className="md:grid md:grid-cols-3 md:gap-6">
             <div className="md:col-span-1">
