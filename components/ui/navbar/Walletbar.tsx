@@ -46,7 +46,7 @@ const Walletbar: FunctionComponent<WalletbarProps> = ({
               alt=''
             />
             <span className='font-semibold text-base relative'>
-              Hi, Unknow
+              Hello, Friend
               <span className='absolute text-[0.5rem] leading-4 bg-blue-light text-blue px-[4px] py-[1px] rounded-2xl left-0 -top-5 uppercase'>
                 Pro
               </span>

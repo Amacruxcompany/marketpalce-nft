@@ -37,6 +37,35 @@ const Slide = () => {
     </article>
   );
 };
+const CreateBanner = () => {
+  return(
+    <article className='grid md:grid-cols-2 items-center gap-12 h-fit rounded-xl max-w-7xl mx-auto'>
+    <figure className='py-6 px-6 md:px-0'>
+      <Image
+        src='/assets/img/partenrs.png'
+        alt='partners'
+        width={653}
+        height={271}
+      />
+    </figure>
+    <section className='py-6 flex flex-col px-6 md:px-0'>
+      <h3 className='text-black dark:text-white uppercase text-3xl'>
+        Crea tu primer NFT
+      </h3>
+      <h4 className='text-black dark:text-gray text-lg'>Amacrux Testnet</h4>
+      {/* <p className='text-2xl mb-6'>
+        We&apos;ve launched the utility token AMAX native to the Amacrux
+        platform 🚀
+      </p> */}
+      <Link href='/nft/create'>
+        <a className='bg-gray text-blue text-xl uppercase rounded-lg px-4 py-2 font-bold self-end'>
+          Create NFT
+        </a>
+      </Link>
+    </section>
+  </article>
+  )
+}
 
 const categories = [
   {
@@ -75,15 +104,14 @@ const Home: NextPage = () => {
   return (
     <BaseLayout hasMargin={false}>
       <section className='bg-gradient-transparent'>
-        <Carousel>
-          <Slide />
+        {/* <Carousel> */}
           {/* <Slide /> */}
-          {/* <Slide /> */}
-        </Carousel>
+        {/* </Carousel> */}
+        <CreateBanner/>
       </section>
       <div className='relative pt-16 pb-20 px-4 sm:px-6 lg:pt-20 lg:pb-28 lg:px-8'>
         <div className='relative max-w-7xl mx-auto px-4 sm:px-6'>
-          <section className=' mb-24'>
+          {/* <section className=' mb-24'>
             <div className='mb-14'>
               <h2 className='text-blue dark:text-white uppercase text-4xl flex gap-4 items-center'>
                 All Categories
@@ -121,7 +149,7 @@ const Home: NextPage = () => {
                 ))}
               </div>
             </div>
-          </section>
+          </section> */}
           {network.isConnectedToNetwork ? (
             <NftList />
           ) : (
